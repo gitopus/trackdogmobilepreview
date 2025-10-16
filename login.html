@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In — Trackdog</title>
+    <script defer src="simple-effects.js"></script>
+    <script defer src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #111112;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .login-header p {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #eee;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #222 !important;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+            outline: none;
+            caret-color: #fff;
+        }
+
+        .form-group input[type="email"] {
+            border: 2px solid #333;
+        }
+
+        .form-group input:focus {
+            border-color: #764AF1;
+        }
+
+        .form-group input[type="email"]:focus {
+            border-color: #764AF1;
+        }
+
+        .form-group input:not(:placeholder-shown) {
+            background: #222 !important;
+        }
+
+        .form-group input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #222 inset !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 16px !important;
+            height: 16px;
+            margin-right: 8px;
+            appearance: none;
+            background: #222;
+            border: 2px solid #333;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked {
+            background: #764AF1;
+            border-color: #764AF1;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-container input[type="checkbox"]:hover {
+            border-color: #764AF1;
+        }
+
+        /* Form Enhancement Styles */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #764AF1;
+        }
+
+        .field-validation {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .field-validation.show {
+            opacity: 1;
+        }
+
+        .validation-success {
+            color: #00aa44;
+        }
+
+        .validation-error {
+            color: #ff4444;
+        }
+
+        .field-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .field-success {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .form-group.error input {
+            border-color: #ff4444;
+        }
+
+        .form-group.success input {
+            border-color: #00aa44;
+        }
+
+        .password-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .forgot-password {
+            color: #764AF1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #a085f8;
+        }
+
+        /* Forgot Password Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal .form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal .login-button {
+            margin-bottom: 0;
+        }
+
+        .login-submit {
+            width: 100%;
+            background: #764AF1;
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .login-submit:hover {
+            background: #8b63f8;
+        }
+
+        .signup-link {
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+
+        .signup-link a {
+            color: #764AF1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #a085f8;
+        }
+
+        .spotify-section {
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .spotify-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            background: #111112;
+            border: 2px solid #1DB954;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .spotify-btn:hover {
+            background: #1a1a1a;
+            border-color: #1ed760;
+        }
+
+        .recommended-label {
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            background: #1DB954;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #333;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-home a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-home a:hover {
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Welcome back</h1>
+            <p>Sign in to your Trackdog account</p>
+        </div>
+
+        <form class="login-form glass-card">
+            <div class="form-group" id="email-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="field-validation" id="email-validation"></div>
+            </div>
+
+            <div class="form-group" id="password-group">
+                <div class="password-label-row">
+                    <label for="password">Password</label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <button type="button" class="password-toggle" id="password-toggle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="remember">
+                    Remember me
+                </label>
+            </div>
+
+            <button type="submit" class="login-submit" id="login-submit-btn">Sign In</button>
+        </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <div class="spotify-section">
+            <button class="spotify-btn" id="spotify-login-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.062 14.444c-.175.288-.547.377-.834.202-2.285-1.394-5.159-1.711-8.54-.939-.364.083-.728-.146-.811-.51-.083-.364.146-.728.51-.811 3.708-.847 6.943-.49 9.613 1.08.287.175.377.547.202.834l-.14.144zm1.188-2.64c-.22.36-.69.475-1.05.254-2.617-1.61-6.606-2.07-9.699-1.134-.438.133-.904-.112-1.037-.55-.133-.438.112-.904.55-1.037 3.552-1.077 8.091-.556 11.182 1.287.36.22.475.69.254 1.05l-.2.13zm.102-2.748C14.739 9.263 8.97 9.02 5.23 10.264c-.526.175-1.087-.108-1.262-.634-.175-.526.108-1.087.634-1.262 4.258-1.421 10.712-1.149 14.717 1.338.464.288.608.903.32 1.367-.288.464-.903.608-1.367.32l-.19-.117z" />
+                </svg>
+                Continue with Spotify
+            </button>
+        </div>
+
+        <div class="signup-link">
+            <p>Don't have an account? <a href="#" onclick="navigateToPage('/signup')">Sign up</a></p>
+        </div>
+
+        <div class="back-home">
+            <a href="#" onclick="navigateToPage('/')">← Back to home</a>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotPasswordModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h3>Reset Password</h3>
+            <p>Enter your email address and we'll send you a link to reset your password.</p>
+
+            <form id="resetPasswordForm">
+                <div class="form-group">
+                    <input type="email" id="resetEmail" placeholder="Email address" required>
+                    <div class="field-validation" id="resetEmailValidation"></div>
+                </div>
+
+                <button type="submit" class="login-button">Send Reset Link</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Simple login functionality
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('password-toggle');
+        const emailValidation = document.getElementById('email-validation');
+
+        // Email validation
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Show/Hide password toggle
+        function togglePasswordVisibility(input, button) {
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>';
+            } else {
+                input.type = 'password';
+                button.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
+            }
+        }
+
+        // Field animations
+        function animateField(element, type) {
+            element.classList.remove('field-shake', 'field-success');
+            setTimeout(() => {
+                element.classList.add(type === 'error' ? 'field-shake' : 'field-success');
+            }, 10);
+        }
+
+        // Event listeners
+        passwordToggle.addEventListener('click', () => togglePasswordVisibility(passwordInput, passwordToggle));
+
+        // Email validation - simplified
+        emailInput.addEventListener('input', function () {
+            const isValid = validateEmail(this.value);
+            const emailGroup = document.getElementById('email-group');
+
+            if (this.value.length > 0) {
+                if (isValid) {
+                    emailGroup.classList.remove('error');
+                    emailGroup.classList.add('success');
+                } else {
+                    emailGroup.classList.remove('success');
+                    emailGroup.classList.add('error');
+                }
+            } else {
+                emailGroup.classList.remove('error', 'success');
+            }
+
+            // Hide validation text
+            emailValidation.textContent = '';
+            emailValidation.className = 'field-validation';
+        });
+
+        // Forgot Password Modal Functionality
+        const forgotPasswordLink = document.querySelector('.forgot-password');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const modalClose = document.getElementById('modalClose');
+        const resetPasswordForm = document.getElementById('resetPasswordForm');
+        const resetEmailInput = document.getElementById('resetEmail');
+        const resetEmailValidation = document.getElementById('resetEmailValidation');
+
+        // Open modal
+        forgotPasswordLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            forgotPasswordModal.classList.add('show');
+            resetEmailInput.focus();
+        });
+
+        // Close modal
+        function closeModal() {
+            forgotPasswordModal.classList.remove('show');
+            resetPasswordForm.reset();
+            resetEmailValidation.textContent = '';
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        forgotPasswordModal.addEventListener('click', function (e) {
+            if (e.target === forgotPasswordModal) {
+                closeModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && forgotPasswordModal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+        // Reset email validation
+        resetEmailInput.addEventListener('input', function () {
+            const email = this.value;
+            if (email.length > 0) {
+                if (validateEmail(email)) {
+                    resetEmailValidation.textContent = '✓ Valid email format';
+                    resetEmailValidation.className = 'field-validation success';
+                    this.parentNode.classList.remove('error');
+                    this.parentNode.classList.add('success');
+                } else {
+                    resetEmailValidation.textContent = '✗ Please enter a valid email address';
+                    resetEmailValidation.className = 'field-validation error';
+                    this.parentNode.classList.remove('success');
+                    this.parentNode.classList.add('error');
+                }
+            } else {
+                resetEmailValidation.textContent = '';
+                resetEmailValidation.className = 'field-validation';
+                this.parentNode.classList.remove('error', 'success');
+            }
+        });
+
+        // Initialize effects system
+        const trackdogEffects = new TrackdogEffects();
+
+        // Enhanced form submission with effects
+        document.querySelector('#loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector('.login-button');
+            showLoading(submitBtn, 'Loading');
+
+            // Simulate login process
+            try {
+                await new Promise(resolve => setTimeout(resolve, 450));
+
+                // Success animation and redirect
+                submitBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    submitBtn.style.transform = 'scale(1)';
+                    alert('Login successful! Welcome back!');
+
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                }, 100);
+
+            } catch (error) {
+                hideLoading(submitBtn, 'Login');
+                alert('Login failed. Please check your credentials.');
+            }
+        });
+
+        // Enhanced Spotify login
+        document.querySelector('.spotify-button').addEventListener('click', async function (e) {
+            const btn = e.target;
+            showLoading(btn, 'Connecting to Spotify...');
+
+            // Simulate Spotify authentication
+            setTimeout(() => {
+                hideLoading(btn, 'Continue with Spotify');
+                alert('Spotify integration coming soon!');
+            }, 1500);
+        });
+
+        // Reset password form submission
+        resetPasswordForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = this.querySelector('.login-button');
+            const email = resetEmailInput.value;
+
+            if (!validateEmail(email)) {
+                resetEmailValidation.textContent = '✗ Please enter a valid email address';
+                resetEmailValidation.className = 'field-validation error';
+                resetEmailInput.parentNode.classList.add('error');
+                return;
+            }
+
+            showLoading(submitBtn, 'Sending...');
+
+            // Simulate sending reset email
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                hideLoading(submitBtn, 'Send Reset Link');
+                alert(`Password reset link sent to ${email}`);
+
+                setTimeout(() => {
+                    closeModal();
+                }, 2000);
+
+            } catch (error) {
+                hideLoading(submitBtn, 'Send Reset Link');
+                alert('Failed to send reset email. Please try again.');
+            }
+        });
+    </script>
+
+    <script>
+        // Fallback navigation function
+        if (typeof navigateToPage === 'undefined') {
+            function navigateToPage(url) {
+                let actualUrl = url;
+                if (url === '/login') actualUrl = 'login.html';
+                if (url === '/signup') actualUrl = 'signup.html';
+                if (url === '/') actualUrl = 'index.html';
+                if (url === '/privacy') actualUrl = 'privacy.html';
+                if (url === '/terms') actualUrl = 'terms.html';
+                window.location.href = actualUrl;
+            }
+        }
+    </script>
+</body>
+
+</html>

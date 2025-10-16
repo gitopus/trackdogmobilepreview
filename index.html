@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackdog — Your Music, Your Stats, Your Story</title>
+    <link href="style.css" rel="stylesheet">
+    <script defer src="script.js"></script>
+    <script defer src="simple-effects.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav class="container nav">
+            <div class="logo">
+                <span class="icon"></span>
+                <a href="" class="logo-text">TRACKDOG</a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="/pricing" class="premium-shine">Premium</a></li>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/features">Features</a></li>
+                <li><a href="/support">Support</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="search-wrapper">
+                    <input type="text" placeholder="Search">
+                    <span class="shortcut">Ctrl K</span>
+                </div>
+                <button class="login-btn" onclick="navigateToPage('/login')">Log In</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-text">
+                <h1><span class="light-accent">Music</span> tracked just for you<br>
+                    Your data kept <span class="light-accent">untouched</span></h1>
+                <p>Where your playlist tells your story. Explore music like never before. 🎶</p>
+                <a href="#" class="watch">Watch the video &mdash;></a>
+
+                <div class="app-buttons">
+                    <a href="https://apps.apple.com/app/trackdog" target="_blank">
+                        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                            alt="App Store">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.trackdog.app" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                            alt="Google Play">
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://cdn.dribbble.com/userupload/10208628/file/original-28a056f0e558dd69d23d24105a49a74e.png?resize=752x"
+                    alt="App Preview">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer">
+            <p>© All rights reserved by <a class="footer-light-accent" href="https://brainbear.org/?utm_source=trackdog"
+                    style="text-decoration: none;">BrainBear</a><br><a class="footer-light-accent" href="privacy"
+                    style="text-decoration: none; font-size: 12px;">Privacy
+                    Policy</a> •
+                <a class="footer-light-accent" href="terms" style="text-decoration: none; font-size: 12px;">Terms of
+                    Service</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

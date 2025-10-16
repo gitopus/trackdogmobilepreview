@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — Trackdog</title>
+    <script defer src="simple-effects.js"></script>
+    <script defer src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #111112;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 380px;
+            padding: 1.5rem;
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .signup-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .signup-header p {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        .signup-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #eee;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #222 !important;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+            outline: none;
+            caret-color: #fff;
+        }
+
+        .form-group input[type="email"] {
+            border: 2px solid #333;
+        }
+
+        .form-group input:focus {
+            border-color: #764AF1;
+        }
+
+        .form-group input[type="email"]:focus {
+            border-color: #764AF1;
+        }
+
+        .form-group input:not(:placeholder-shown) {
+            background: #222 !important;
+        }
+
+        .form-group input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 1000px #222 inset !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-options {
+            margin-bottom: 2rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 16px !important;
+            height: 16px;
+            margin-right: 8px;
+            margin-top: 2px;
+            appearance: none;
+            background: #222;
+            border: 2px solid #333;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked {
+            background: #764AF1;
+            border-color: #764AF1;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-container input[type="checkbox"]:hover {
+            border-color: #764AF1;
+        }
+
+        .terms-link {
+            color: #764AF1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .terms-link:hover {
+            color: #a085f8;
+            text-decoration: underline;
+        }
+
+        /* Form Enhancement Styles */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #764AF1;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+
+        .strength-bar {
+            height: 6px;
+            background: transparent;
+            border: 2px solid #333;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+
+        .strength-fill {
+            display: none;
+        }
+
+        .strength-very-weak .strength-bar {
+            border-color: #cc0000;
+        }
+
+        .strength-weak .strength-bar {
+            border-color: #ff4444;
+        }
+
+        .strength-medium .strength-bar {
+            border-color: #ffaa00;
+        }
+
+        .strength-strong .strength-bar {
+            border-color: #00aa44;
+        }
+
+        .field-validation {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .field-validation.show {
+            opacity: 1;
+        }
+
+        .validation-success {
+            color: #00aa44;
+        }
+
+        .validation-error {
+            color: #ff4444;
+        }
+
+        .field-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .field-success {
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-5px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .form-group.error input {
+            border-color: #ff4444;
+        }
+
+        .form-group.success input {
+            border-color: #00aa44;
+        }
+
+        .signup-submit {
+            width: 100%;
+            background: #764AF1;
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .signup-submit:hover {
+            background: #8b63f8;
+        }
+
+        .signup-submit:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .signup-submit:disabled:hover {
+            background: #333;
+        }
+
+        .login-link {
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+
+        .login-link a {
+            color: #764AF1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #a085f8;
+        }
+
+        .spotify-section {
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .spotify-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            background: #111112;
+            border: 2px solid #1DB954;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .spotify-btn:hover {
+            background: #1a1a1a;
+            border-color: #1ed760;
+        }
+
+        .recommended-label {
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            background: #1DB954;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 6px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #333;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-home a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-home a:hover {
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <h1>Create account</h1>
+            <p>Get started with your Trackdog account</p>
+        </div>
+
+        <form class="signup-form">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group" id="email-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="field-validation" id="email-validation"></div>
+            </div>
+
+            <div class="form-group" id="password-group">
+                <label for="password">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    <button type="button" class="password-toggle" id="password-toggle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="password-strength" id="password-strength" style="display: none;">
+                    <div class="strength-text"></div>
+                    <div class="strength-bar">
+                        <div class="strength-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="terms" required>
+                    I agree to the <a href="#" onclick="navigateToPage('/terms')" class="terms-link">Terms of
+                        Service</a> and <a href="#" onclick="navigateToPage('/privacy')" class="terms-link">Privacy
+                        Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="signup-submit" id="signup-btn" disabled>Create Account</button>
+        </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <div class="spotify-section">
+            <button class="spotify-btn">
+                <div class="recommended-label">Recommended</div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.062 14.444c-.175.288-.547.377-.834.202-2.285-1.394-5.159-1.711-8.54-.939-.364.083-.728-.146-.811-.51-.083-.364.146-.728.51-.811 3.708-.847 6.943-.49 9.613 1.08.287.175.377.547.202.834l-.14.144zm1.188-2.64c-.22.36-.69.475-1.05.254-2.617-1.61-6.606-2.07-9.699-1.134-.438.133-.904-.112-1.037-.55-.133-.438.112-.904.55-1.037 3.552-1.077 8.091-.556 11.182 1.287.36.22.475.69.254 1.05l-.2.13zm.102-2.748C14.739 9.263 8.97 9.02 5.23 10.264c-.526.175-1.087-.108-1.262-.634-.175-.526.108-1.087.634-1.262 4.258-1.421 10.712-1.149 14.717 1.338.464.288.608.903.32 1.367-.288.464-.903.608-1.367.32l-.19-.117z" />
+                </svg>
+                Continue with Spotify
+            </button>
+        </div>
+
+        <div class="login-link">
+            <p>Already have an account? <a href="#" onclick="navigateToPage('/login')">Sign in</a></p>
+        </div>
+
+        <div class="back-home">
+            <a href="#" onclick="navigateToPage('/')">← Back to home</a>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const termsCheckbox = document.getElementById('terms');
+        const signupButton = document.getElementById('signup-btn');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('password-toggle');
+
+        // Validation elements
+        const emailValidation = document.getElementById('email-validation');
+        const passwordStrength = document.getElementById('password-strength');
+
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            const minLength = 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            if (password.length < 4) {
+                return { strength: 'very-weak' };
+            }
+
+            if (password.length < minLength) {
+                return { strength: 'weak' };
+            }
+
+            const score = [hasUppercase, hasLowercase, hasNumbers, hasSpecialChar].filter(Boolean).length;
+
+            if (score < 2) {
+                return { strength: 'weak' };
+            } else if (score < 4) {
+                return { strength: 'medium' };
+            } else {
+                return { strength: 'strong' };
+            }
+        }        // Email validation
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Show/Hide password toggle
+        function togglePasswordVisibility(input, button) {
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>';
+            } else {
+                input.type = 'password';
+                button.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
+            }
+        }
+
+        // Field animations
+        function animateField(element, type) {
+            element.classList.remove('field-shake', 'field-success');
+            setTimeout(() => {
+                element.classList.add(type === 'error' ? 'field-shake' : 'field-success');
+            }, 10);
+        }
+
+        // Function to update button state
+        function updateButtonState() {
+            const isEmailValid = validateEmail(emailInput.value);
+            const passwordStrengthCheck = checkPasswordStrength(passwordInput.value);
+            const isTermsAccepted = termsCheckbox.checked;
+
+            // Only allow medium and strong passwords
+            const isPasswordStrong = passwordStrengthCheck.strength === 'medium' || passwordStrengthCheck.strength === 'strong';
+
+            signupButton.disabled = !(isEmailValid && isPasswordStrong && isTermsAccepted);
+        }
+
+        // Event listeners
+        passwordToggle.addEventListener('click', () => togglePasswordVisibility(passwordInput, passwordToggle));
+
+        // Email validation - simplified
+        emailInput.addEventListener('input', function () {
+            const isValid = validateEmail(this.value);
+            const emailGroup = document.getElementById('email-group');
+
+            if (this.value.length > 0) {
+                if (isValid) {
+                    emailGroup.classList.remove('error');
+                    emailGroup.classList.add('success');
+                } else {
+                    emailGroup.classList.remove('success');
+                    emailGroup.classList.add('error');
+                }
+            } else {
+                emailGroup.classList.remove('error', 'success');
+            }
+
+            // Hide validation text
+            emailValidation.textContent = '';
+            emailValidation.className = 'field-validation';
+            updateButtonState();
+        });
+
+        // Password strength validation - simplified
+        passwordInput.addEventListener('input', function () {
+            const strength = checkPasswordStrength(this.value);
+            const passwordGroup = document.getElementById('password-group');
+
+            if (this.value.length > 0) {
+                passwordStrength.style.display = 'block';
+                passwordStrength.className = `password-strength strength-${strength.strength}`;
+
+                if (strength.strength === 'strong' || strength.strength === 'medium') {
+                    passwordGroup.classList.remove('error');
+                    passwordGroup.classList.add('success');
+                } else if (strength.strength === 'weak' || strength.strength === 'very-weak') {
+                    passwordGroup.classList.remove('success');
+                    passwordGroup.classList.add('error');
+                }
+            } else {
+                passwordStrength.style.display = 'none';
+                passwordGroup.classList.remove('error', 'success');
+            }
+
+
+
+            updateButtonState();
+        });
+
+
+
+        // Terms checkbox
+        termsCheckbox.addEventListener('change', updateButtonState);
+
+        // Initial state
+        updateButtonState();
+
+        // Simple effects only
+
+        // Enhanced form submission
+        document.querySelector('#signupForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.querySelector('.signup-button');
+            showLoading(submitBtn, 'Creating account...');
+
+            // Simulate account creation with email verification
+            try {
+                // Step 1: Create account
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                hideLoading(submitBtn, 'Create Account');
+                alert('Account created! Please check your email for verification.');
+
+                // Step 2: Show email verification step
+                const email = document.getElementById('email').value;
+                showEmailVerificationStep(email);
+
+            } catch (error) {
+                hideLoading(submitBtn, 'Create Account');
+                alert('Account creation failed. Please try again.');
+            }
+        });
+
+        // Email verification step
+        function showEmailVerificationStep(email) {
+            const formContainer = document.querySelector('.form-container');
+            const originalContent = formContainer.innerHTML;
+
+            formContainer.innerHTML = `
+                <div class="verification-step">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="font-size: 3rem; margin-bottom: 20px;">📧</div>
+                        <h2 style="color: white; margin-bottom: 10px;">Check your email</h2>
+                        <p style="color: rgba(255,255,255,0.8); line-height: 1.5;">
+                            We've sent a verification link to<br>
+                            <strong>${email}</strong>
+                        </p>
+                    </div>
+                    
+                    <div class="verification-actions" style="display: flex; flex-direction: column; gap: 15px;">
+                        <button class="signup-button" id="resendEmail">Resend verification email</button>
+                        <button class="signup-button secondary" id="changeEmail" style="background: transparent; border: 1px solid #764AF1; color: #764AF1;">Use different email</button>
+                        <button class="signup-button secondary" id="skipVerification" style="background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.7);">Skip for now</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                            Didn't receive the email? Check your spam folder or 
+                            <a href="#" id="contactSupport" style="color: #764AF1;">contact support</a>
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            // Add event listeners for verification actions
+            document.getElementById('resendEmail').addEventListener('click', async function () {
+                const btn = this;
+                showLoading(btn, 'Sending...');
+
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                hideLoading(btn, 'Resend verification email');
+                alert('Verification email resent!');
+            });
+
+            document.getElementById('changeEmail').addEventListener('click', function () {
+                formContainer.innerHTML = originalContent;
+                // Re-initialize form functionality (simplified)
+                initializeFormValidation();
+            });
+
+            document.getElementById('skipVerification').addEventListener('click', function () {
+                alert('Welcome to Trackdog! You can verify your email later.');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            });
+
+            document.getElementById('contactSupport').addEventListener('click', function (e) {
+                e.preventDefault();
+                alert('Support: help@trackdog.com');
+            });
+        }
+
+        // Initialize form validation function (for re-initialization)
+        function initializeFormValidation() {
+            // Re-initialize all the form validation logic
+            // Add form submission handler
+            document.querySelector('#signupForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                // Repeat the form submission logic...
+            });
+        }
+    </script>
+
+    <script>
+        // Fallback navigation function
+        if (typeof navigateToPage === 'undefined') {
+            function navigateToPage(url) {
+                let actualUrl = url;
+                if (url === '/login') actualUrl = 'login.html';
+                if (url === '/signup') actualUrl = 'signup.html';
+                if (url === '/') actualUrl = 'index.html';
+                if (url === '/privacy') actualUrl = 'privacy.html';
+                if (url === '/terms') actualUrl = 'terms.html';
+                window.location.href = actualUrl;
+            }
+        }
+    </script>
+</body>
+
+</html>
