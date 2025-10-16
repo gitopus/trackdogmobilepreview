@@ -1,10 +1,37 @@
-// Small hover or animation tweaks can be added here
-document.querySelectorAll('.feature').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-        card.style.boxShadow = '0 0 20px rgba(118,74,241,0.25)';
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.boxShadow = 'none';
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (mobileMenuToggle && navLinks) {
+        mobileMenuToggle.addEventListener('click', function () {
+            mobileMenuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            if (!mobileMenuToggle.contains(event.target) && !navLinks.contains(event.target)) {
+                mobileMenuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking on a nav link
+        navLinks.addEventListener('click', function () {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    }
+
+    // Small hover or animation tweaks can be added here
+    document.querySelectorAll('.feature').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.boxShadow = '0 0 20px rgba(118,74,241,0.25)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.boxShadow = 'none';
+        });
     });
 });
 
@@ -14,7 +41,7 @@ const searchInput = document.querySelector('.search-wrapper input');
 window.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        searchInput.focus();
+        if (searchInput) searchInput.focus();
     }
 });
 
